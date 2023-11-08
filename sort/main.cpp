@@ -46,7 +46,7 @@ void bench(std::vector<int>& data)
     double ratio = basic / good;
     std::cout << "Sort " << data.size() << " integers. ";
     std::cout << " std::sort in " << basic << "ns. Your in " << good << "ns. Speeedup: " << ratio << std::endl; 
-    assert(good > 1.5);
+    assert(ratio > 1.5);
 }
 
 void test_performance(int n)
