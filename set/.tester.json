@@ -1,0 +1,6 @@
+{
+    "allow_change": [
+        "set.h"
+    ],
+    "asm": true
+}

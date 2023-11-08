@@ -1,0 +1,6 @@
+{
+    "allow_change": [
+        "sort.cpp"
+    ],
+    "asm": true
+}

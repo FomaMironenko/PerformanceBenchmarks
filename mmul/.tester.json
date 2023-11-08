@@ -1,0 +1,6 @@
+{
+    "allow_change": [
+        "matrix.cpp"
+    ],
+    "asm": true
+}
