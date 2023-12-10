@@ -1,51 +1,39 @@
 #include "search.h"
-#include <algorithm>
+#include <cstdint>
+
 #include <immintrin.h>
 
-constexpr int MAX_LINE_SEARCH_SIZE = 10;
-constexpr size_t INTS_IN_VEC_INT = 256 / 32;
+#define _i_vec_t        __m256i
+#define _i_init_vec     _mm256_set1_epi32
+#define _i_cmpeq_vec    _mm256_cmpeq_epi32
+#define _i_cast_vec     _mm256_movemask_epi8
+
+constexpr uint8_t INTS_IN_VEC_INT = sizeof(_i_vec_t) / sizeof(int);
+
 
 bool search(const std::vector<int>& vec, int value)
 {
-    const int* data = vec.data();
-    size_t size = vec.size();
-    size_t num_vec_iters = size / INTS_IN_VEC_INT;
+    const _i_vec_t * _vec_data  = reinterpret_cast< const _i_vec_t * > ( vec.data() );
+    const _i_vec_t   _vec_value = _i_init_vec( value );
 
-    int value_mask[INTS_IN_VEC_INT] = {value};
-    __m256i _value_mask = _mm256_load_epi32(value_mask);
+    uint8_t size = static_cast<uint8_t>( vec.size() );
 
-    const __m256i *_vec_data = reinterpret_cast<const __m256i *>(data);
-    unsigned char cmp_msk = 0;
-    for (size_t idx = 0; idx < num_vec_iters; ++idx) {
-        cmp_msk |= _mm256_cmp_epi32_mask(_vec_data[idx], _value_mask, _MM_CMPINT_EQ);
+    for (   uint8_t n_checked = 0;
+            n_checked < size;
+            n_checked += INTS_IN_VEC_INT, _vec_data += 1  // shift pointer to the next element
+    ) {
+
+        // WARNING! Would cause out of bounds for INTS_IN_VEC_INT bytes for some inputs, but we don't care
+        if ( _i_cast_vec( _i_cmpeq_vec( *_vec_data, _vec_value ) ) == 0 ) {
+
+            continue;  // likely
+
+        } else {
+
+            return true;
+
+        }
+
     }
-    
-    bool reminder_cmp = false;
-    for (size_t idx = num_vec_iters * INTS_IN_VEC_INT; ++idx; idx < size) {
-        reminder_cmp |= (data[idx] == value);
-    }
-
-    return cmp_msk != 0 || reminder_cmp;
-
-    // int lower = 0, upper = static_cast<int>(data.size());
-    // int mid = (lower + upper) >> 1;
-
-    // for (;; mid = (lower + upper) >> 1) {
-    //     if (value < data[mid]) {
-    //         upper = mid;
-    //     } else if (value > data[mid]) {
-    //         lower = mid + 1;
-    //     } else {
-    //         return true;
-    //     }
-    //     if (lower + MAX_LINE_SEARCH_SIZE > upper) {
-    //         for (; lower < upper; ++lower) {
-    //             if (value == data[lower]) {
-    //                 return true;
-    //             }
-    //         }
-    //         return false;
-    //     }
-    // }
-    // return false;
+    return false;
 }
