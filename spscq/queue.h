@@ -3,6 +3,7 @@
 #include <mutex>
 #include <deque>
 #include <cassert>
+#include <optional>
 
 class Spinlock {
 public:
