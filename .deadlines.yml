@@ -5,7 +5,7 @@
   tasks:
     - task: spscq
       score: 200
-      url: https://gitlab.com/savrus/shad-sre/-/tree/master/spscq
+      url: https://gitlab.com/savrus/shad-sre/-/tree/main/spscq
 
 - group:    memory
   start:    11-12-2023 00:00
@@ -14,13 +14,13 @@
   tasks:
     - task: mmul
       score: 100
-      url: https://gitlab.com/savrus/shad-sre/-/tree/master/mmul
+      url: https://gitlab.com/savrus/shad-sre/-/tree/main/mmul
     - task: set 
       score: 300
-      url: https://gitlab.com/savrus/shad-sre/-/tree/master/set
+      url: https://gitlab.com/savrus/shad-sre/-/tree/main/set
     - task: sort 
       score: 300
-      url: https://gitlab.com/savrus/shad-sre/-/tree/master/sort
+      url: https://gitlab.com/savrus/shad-sre/-/tree/main/sort
 
 - group:    binsearch
   start:    11-12-2023 00:00
@@ -29,12 +29,12 @@
   tasks:
     - task: search_small
       score: 100
-      url: https://gitlab.com/savrus/shad-sre/-/tree/master/search_small
+      url: https://gitlab.com/savrus/shad-sre/-/tree/main/search_small
     - task: search_medium
       score: 200
-      url: https://gitlab.com/savrus/shad-sre/-/tree/master/search_medium
+      url: https://gitlab.com/savrus/shad-sre/-/tree/main/search_medium
     - task: search_large
       score: 200
-      url: https://gitlab.com/savrus/shad-sre/-/tree/master/search_large
+      url: https://gitlab.com/savrus/shad-sre/-/tree/main/search_large
 
 
