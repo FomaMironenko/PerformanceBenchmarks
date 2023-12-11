@@ -1,0 +1,27 @@
+name: sre
+
+# course
+deadlines: hard
+second_deadline_max: 0.5
+low_demand_bonus_bound: 0.25
+max_low_demand_bonus: 1.0
+
+# checker
+system: python
+layout: group
+executor: sandbox
+
+# gitlab
+gitlab_url: https://gitlab.manytask.org
+default_branch: main
+course_group: sre
+public_repo: sre/public-2023-fall
+students_group: sre/students-fall-2023
+gitlab_service_name: Python Bot
+
+# manytask
+manytask_url: https://sre.manytask.org
+
+# info
+lms_url: https://lk.yandexdataschool.ru/courses/2023-autumn/7.1178-performance-of-systems/
+

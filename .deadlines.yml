@@ -1,0 +1,40 @@
+- group:    multicore
+  start:    11-12-2023 00:00
+  deadline: 19-12-2023 23:59
+  second_deadline: 30-01-2024 23:59
+  tasks:
+    - task: spscq
+      score: 200
+      url: https://gitlab.com/savrus/shad-sre/-/tree/master/spscq
+
+- group:    memory
+  start:    11-12-2023 00:00
+  deadline: 19-12-2023 23:59
+  second_deadline: 30-01-2024 23:59
+  tasks:
+    - task: mmul
+      score: 100
+      url: https://gitlab.com/savrus/shad-sre/-/tree/master/mmul
+    - task: set 
+      score: 300
+      url: https://gitlab.com/savrus/shad-sre/-/tree/master/set
+    - task: sort 
+      score: 300
+      url: https://gitlab.com/savrus/shad-sre/-/tree/master/sort
+
+- group:    binsearch
+  start:    11-12-2023 00:00
+  deadline: 19-12-2023 23:59
+  second_deadline: 30-01-2024 23:59
+  tasks:
+    - task: search_small
+      score: 100
+      url: https://gitlab.com/savrus/shad-sre/-/tree/master/search_small
+    - task: search_medium
+      score: 200
+      url: https://gitlab.com/savrus/shad-sre/-/tree/master/search_medium
+    - task: search_large
+      score: 200
+      url: https://gitlab.com/savrus/shad-sre/-/tree/master/search_large
+
+
