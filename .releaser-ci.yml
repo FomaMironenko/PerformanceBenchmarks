@@ -7,7 +7,6 @@ stages:
 deploy:
   only:
   - master
-  
   tags:
   - docker
   stage: release
