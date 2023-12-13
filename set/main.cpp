@@ -215,7 +215,7 @@ void bench(int n, std::vector<Item>& schedule, double bound)
     double ratio = basic/good;
     std::cout << "Executed " << schedule.size() << " set operations on " << n << " elements.";
     std::cout << " std::set int " << basic << "ns. Your in " << good << "ns. Speedup: " << ratio << std::endl;
-    //assert(ratio > bound); 
+    assert(ratio > bound); 
 }
 
 void test_performance(int n, int k)
