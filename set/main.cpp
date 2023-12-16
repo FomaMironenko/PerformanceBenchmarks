@@ -65,6 +65,48 @@ std::vector<Item> generate_schedule(int n, int k)
     return schedule;
 }
 
+std::vector<Item> generate_schedule_minmax(int n, int k)
+{
+    std::random_device device;
+    std::mt19937 mt(device());
+    std::vector<int> data;
+    data.reserve(n);
+    for (int i = 0; i < n; ++i) {
+        data.push_back(mt());
+    }
+    std::vector<Item> schedule;
+    schedule.reserve(2*n*k);
+    for (auto v : data) {
+        schedule.push_back({Command::kInsert, v});
+    }
+    std::sort(data.begin(),data.end());
+    int v = data[0];
+    for (int i = 0; i < n*2; ++i) {
+    	schedule.push_back({Command::kMin, v});
+    	schedule.push_back({Command::kErase, v});
+        schedule.push_back({Command::kInsert, v});
+    }
+    v = data[data.size()-1];
+    for (int i = 0; i < n*2; ++i) {
+    	schedule.push_back({Command::kMax, v});
+    	schedule.push_back({Command::kErase, v});
+        schedule.push_back({Command::kInsert, v});
+    }
+    for (auto v : data) {
+        schedule.push_back({Command::kMin, v});
+        schedule.push_back({Command::kErase, v});
+    }
+    for (auto v : data) {
+        schedule.push_back({Command::kInsert, v});
+    }
+    std::reverse(data.begin(),data.end());
+    for (auto v : data) {
+        schedule.push_back({Command::kMax, v});
+        schedule.push_back({Command::kErase, v});
+    }
+    return schedule;
+}
+
 std::pair<std::vector<Item>, std::vector<Item>> generate_ro_schedule(int n, int m)
 {
     std::random_device device;
@@ -166,20 +208,26 @@ double bench_best(std::vector<Item>& schedule)
     return double(best);
 }
 
-void bench(int n, std::vector<Item>& schedule)
+void bench(int n, std::vector<Item>& schedule, double bound)
 {
     double basic = bench_best<StlSet>(schedule);
     double good = bench_best<Set>(schedule);
     double ratio = basic/good;
     std::cout << "Executed " << schedule.size() << " set operations on " << n << " elements.";
     std::cout << " std::set int " << basic << "ns. Your in " << good << "ns. Speedup: " << ratio << std::endl;
-    assert(ratio > 1.5); 
+    assert(ratio > bound); 
 }
 
 void test_performance(int n, int k)
 {
     auto schedule = generate_schedule(n, k);
-    bench(n, schedule);
+    bench(n, schedule, 1.5);
+}
+
+void test_performance_minmax(int n, int k)
+{
+    auto schedule = generate_schedule_minmax(n, k);
+    bench(n, schedule, 0.5);
 }
 
 void validate(int n, int k)
@@ -206,8 +254,17 @@ void test_performance()
     std::cout << "test_performance PASSED" << std::endl; 
 }
 
+void test_performance_minmax()
+{
+    for (int i = 10; i < 18; ++i) {
+        test_performance_minmax(1<<i, 10);
+    }
+    std::cout << "test_performance_minmax PASSED" << std::endl; 
+}
+
 int main()
 {
     test_correctness();
     test_performance();
+    test_performance_minmax();
 }

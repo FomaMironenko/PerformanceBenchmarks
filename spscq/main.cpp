@@ -1,6 +1,8 @@
 #include <iostream>
 #include <chrono>
 #include <cstdlib>
+#include <thread>
+#include <cassert>
 
 #include "queue.h"
 

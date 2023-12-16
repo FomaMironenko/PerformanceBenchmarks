@@ -1,4 +1,4 @@
-CPP=clang++-10
+CPP=g++
 
 run: main
 	./main
